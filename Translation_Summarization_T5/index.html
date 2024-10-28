@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summary and Translation</title>
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="container">
+        <img id="logo" src="/assets/images/logo.png" alt="Logo">
+        <h1>Text Summarizer & Translator</h1>
+        
+        <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+        
+        <div id="language-selection">
+            <div class="language-box">
+                <label for="sourceLanguage">Source Language:</label>
+                <select id="sourceLanguage">
+                    <option value="English">English</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                </select>
+            </div>
+            <div class="language-box">
+                <label for="targetLanguage">Target Language:</label>
+                <select id="targetLanguage">
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="English">English</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="output-container">
+            <div class="output-box">
+                <button onclick="submitForm('translate')">Translate Original Text</button>
+                <textarea id="translatedText" placeholder="Translation will appear here..." readonly></textarea>
+            </div>
+            <div class="output-box">
+                <button onclick="submitForm('summarize')">Summarize in Original Language</button>
+                <textarea id="summaryText" placeholder="Summary will appear here..." readonly></textarea>
+            </div>
+            <div class="output-box">
+                <button onclick="submitForm('translate_summary')">Translate Summary</button>
+                <textarea id="translatedSummaryText" placeholder="Translated summary will appear here..." readonly></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
