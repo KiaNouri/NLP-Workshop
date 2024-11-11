@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Summary and Translation</title>
+  <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img id="logo" src="/assets/images/logo.png" alt="Logo">
+      <h1>Text Summary and Translation</h1>
+    </div>
+
+    <div class="content">
+      <div class="input-section">
+        <textarea id="inputText" placeholder="Enter your text here..." rows="10"></textarea>
+
+        <div class="language-selection">
+          <div class="select-container">
+            <select id="sourceLanguage" class="lang-select" aria-label="Select source language">
+              <option value="" disabled selected>Source Language</option>
+              <option value="English">English</option>
+              <option value="Romanian">Romanian</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+            </select>
+          </div>
+
+          <div class="select-container">
+            <select id="targetLanguage" class="lang-select" aria-label="Select target language">
+              <option value="" disabled selected>Target Language</option>
+              <option value="English">English</option>
+              <option value="Romanian">Romanian</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="action-btn" onclick="submitForm('translate')">Translate</button>
+          <button class="action-btn" onclick="submitForm('summarize')">Summarize</button>
+          <button class="action-btn" onclick="submitForm('translate_summary')">Translate Summary</button>
+        </div>
+      </div>
+
+      <div class="output-section">
+        <div class="output-box">
+          <h3>Translated Text</h3>
+          <textarea id="translatedText" class="output-content" readonly></textarea>
+        </div>
+
+        <div class="output-box">
+          <h3>Summarized Text</h3>
+          <textarea id="summaryText" class="output-content" rows="10"></textarea>
+        </div>
+
+        <div class="output-box">
+          <h3>Translated Summary</h3>
+          <textarea id="translatedSummaryText" class="output-content" readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
