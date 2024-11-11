@@ -5,56 +5,63 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# load the T5 model and tokenizer
-model_name = "t5-large"  # it could be t5-small or even t5-base
+# Load the T5 model and tokenizer
+model_name = "t5-large"  # It could be t5-small or even t5-base
 tokenizer = T5Tokenizer.from_pretrained(model_name)
 model = T5ForConditionalGeneration.from_pretrained(model_name)
 
-# Helper function to generate text based on task
 
-
-def generate_text(task_prefix, text):
-    input_text = f"{task_prefix}: {text}"
-    inputs = tokenizer.encode(
-        input_text, return_tensors="pt", max_length=512, truncation=True)
-    outputs = model.generate(inputs, max_length=150,
-                             num_beams=4, early_stopping=True)
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-# Route for translation
-
-
-@app.route('/translate', methods=['POST'])
-def translate():
-    input_text = request.form['inputText']
-    source_lang = request.form['sourceLanguage']
-    target_lang = request.form['targetLanguage']
-    task_prefix = f"translate {source_lang} to {target_lang}"
-    result = generate_text(task_prefix, input_text)
-    return result
-
-# Route for summarization
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
     input_text = request.form['inputText']
-    result = generate_text("summarize", input_text)
-    return result
+    summary_input = f"summarize: {input_text}"
+    summary_input_ids = tokenizer.encode(summary_input, return_tensors="pt")
+    summary_outputs = model.generate(
+        summary_input_ids, max_length=10, num_beams=6, early_stopping=True)
+    summary_text = tokenizer.decode(
+        summary_outputs[0], skip_special_tokens=True)
+    return summary_text
 
-# Route for translating a summary
+
+@app.route('/translate', methods=['POST'])
+def translate():
+    input_text = request.form['inputText']
+    source_language = request.form['sourceLanguage']
+    target_language = request.form['targetLanguage']
+    translation_input = f"Translate this text from {
+        source_language} to {target_language}: {input_text}"
+
+    translation_input_ids = tokenizer.encode(
+        translation_input, return_tensors="pt")
+    translation_outputs = model.generate(
+        translation_input_ids, max_length=512, num_beams=10, early_stopping=True)
+    translated_text = tokenizer.decode(
+        translation_outputs[0], skip_special_tokens=True)
+    print(f"Input Text: {input_text}, Source: {
+          source_language}, Target: {target_language}")
+    return translated_text
 
 
 @app.route('/translate_summary', methods=['POST'])
 def translate_summary():
-    source_lang = request.form['sourceLanguage']
     summary_text = request.form['summaryText']
-    target_lang = request.form['targetLanguage']
-    task_prefix = f"translate {source_lang} to {target_lang}"
-    result = generate_text(task_prefix, summary_text)
-    result = generate_text("summarize", result)
-    return result
+    source_language = request.form['sourceLanguage']
+    target_language = request.form['targetLanguage']
+    translation_summary_input = f"translate {
+        source_language} to {target_language}: {summary_text}"
+    translation_summary_input_ids = tokenizer.encode(
+        translation_summary_input, return_tensors="pt")
+    translated_summary_outputs = model.generate(
+        translation_summary_input_ids, max_length=10, num_beams=6, early_stopping=True)
+    translated_summary_text = tokenizer.decode(
+        translated_summary_outputs[0], skip_special_tokens=True)
+    return translated_summary_text
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
