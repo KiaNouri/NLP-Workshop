@@ -1,0 +1,16 @@
+Product,Sales,Profit,Region
+Product A,1200,300,North
+Product B,750,150,South
+Product C,950,200,East
+Product D,1300,350,West
+Product E,800,180,North
+Product A,1100,290,South
+Product B,900,210,East
+Product C,1350,320,West
+Product D,700,160,North
+Product E,820,190,South
+Product A,1250,330,East
+Product B,730,170,West
+Product C,910,220,North
+Product D,1450,400,South
+Product E,650,140,East
